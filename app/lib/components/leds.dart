@@ -10,17 +10,18 @@ class Leds extends StatefulWidget {
 }
 
 class _LedsState extends State<Leds> {
-  void makeRequest() async {
-    http.Response r =
-        await http.get(Uri.parse("http://localhost:3333/api/users"));
-    if (r.statusCode == 200) {
-      print("Got it");
-      print(r.body);
-    } else {
-      print('Err');
-      print(r.body);
-    }
-  }
+  // --- example of how to make a request -- 
+
+  /* void makeRequest() async { */
+  /*   http.Response r = await http.get(Uri.parse("http://localhost:3333/api/users")); */
+  /*   if (r.statusCode == 200) { */
+  /*     print("Got it"); */
+  /*     print(r.body); */
+  /*   } else { */
+  /*     print('Err'); */
+  /*     print(r.body); */
+  /*   } */
+  /* } */
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _LedsState extends State<Leds> {
             color: Colors.red,
             onPress: () {
               print("red pressed!");
-              makeRequest();
+              /* makeRequest(); */ 
             },
             text: 'Red',
           ),
