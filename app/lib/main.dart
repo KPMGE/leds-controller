@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leds/components/leds.dart';
+import 'package:app/components/leds.dart';
 
 void main() {
   runApp(const MyApp());
