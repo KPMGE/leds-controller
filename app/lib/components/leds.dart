@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leds/components/led-button.dart';
+import 'package:http/http.dart' as http;
 
 class Leds extends StatefulWidget {
   const Leds({Key? key}) : super(key: key);
@@ -9,6 +10,18 @@ class Leds extends StatefulWidget {
 }
 
 class _LedsState extends State<Leds> {
+  void makeRequest() async {
+    http.Response r =
+        await http.get(Uri.parse("http://localhost:3333/api/users"));
+    if (r.statusCode == 200) {
+      print("Got it");
+      print(r.body);
+    } else {
+      print('Err');
+      print(r.body);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,6 +34,7 @@ class _LedsState extends State<Leds> {
             color: Colors.red,
             onPress: () {
               print("red pressed!");
+              makeRequest();
             },
             text: 'Red',
           ),
