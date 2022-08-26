@@ -38,7 +38,7 @@ void setup() {
   server.on("/green_off", handle_led_green_off);
   server.on("/blue_on", handle_led_blue_on);
   server.on("/blue_off", handle_led_blue_off);
-  server.onNotFound(handle_NotFound);
+  server.onNotFound(handle_not_found);
   
   server.begin();
   Serial.println("HTTP Server Started...");
