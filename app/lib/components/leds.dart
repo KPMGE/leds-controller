@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:leds/components/led-button.dart';
+import 'package:app/components/led-button.dart';
 import 'package:http/http.dart' as http;
 
 class Leds extends StatefulWidget {
@@ -10,18 +10,66 @@ class Leds extends StatefulWidget {
 }
 
 class _LedsState extends State<Leds> {
-  // --- example of how to make a request -- 
+  final String nodeUri = "http://192.168.4.1/";
 
-  /* void makeRequest() async { */
-  /*   http.Response r = await http.get(Uri.parse("http://localhost:3333/api/users")); */
-  /*   if (r.statusCode == 200) { */
-  /*     print("Got it"); */
-  /*     print(r.body); */
-  /*   } else { */
-  /*     print('Err'); */
-  /*     print(r.body); */
-  /*   } */
-  /* } */
+  void turnOnLed(String color) async {
+    String ledParam = "";
+
+    switch (color) {
+      case "red": 
+        ledParam = "red_on";
+      break;
+
+      case "green":
+        ledParam = "green_on";
+        break;
+
+      case "blue":
+        ledParam = "blue_on";
+        break;
+      default:
+        print("Invalid led!");
+        return;
+    }
+
+    http.Response r = await http.get(Uri.parse(nodeUri + ledParam));
+
+    print(Uri.parse(nodeUri + ledParam));
+
+    if (r.statusCode == 200) {
+      print(r.body);
+    } else {
+      print(r.body);
+    }
+  }
+
+  void turnOffLed(String color) async {
+    String ledParam = "";
+
+    switch (color) {
+      case "red":
+        ledParam = "red_off";
+        break;
+
+      case "green":
+        ledParam = "green_off";
+        break;
+
+      case "blue":
+        ledParam = "blue_off";
+        break;
+      default:
+        print("Invalid led!");
+        return;
+    }
+
+    http.Response r = await http.get(Uri.parse(nodeUri + ledParam));
+    if (r.statusCode == 200) {
+      print(r.body);
+    } else {
+      print(r.body);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,25 +81,33 @@ class _LedsState extends State<Leds> {
           const SizedBox(height: 20.0),
           LedButton(
             color: Colors.red,
-            onPress: () {
-              print("red pressed!");
-              /* makeRequest(); */ 
+            onActive: () {
+              turnOnLed("red");
+            },
+            onDisabled: () {
+              turnOffLed("red");
             },
             text: 'Red',
           ),
           const SizedBox(height: 20.0),
           LedButton(
             color: Colors.green,
-            onPress: () {
-              print("green pressed!");
+            onActive: () {
+              turnOnLed("green");
+            },
+            onDisabled: () {
+              turnOffLed("green");
             },
             text: 'Green',
           ),
           const SizedBox(height: 20.0),
           LedButton(
             color: Colors.blue,
-            onPress: () {
-              print("blue pressed!");
+            onActive: () {
+              turnOnLed("blue");
+            },
+            onDisabled: () {
+              turnOffLed("blue");
             },
             text: 'Blue',
           ),
