@@ -62,7 +62,9 @@ void loop() {
     return;
   }
   
-  digitalWrite(D4, LOW);
+  digitalWrite(RED_PIN, LOW);
+  digitalWrite(BLUE_PIN, LOW);
+  digitalWrite(GREEN_PIN, LOW);
 }
 
 void handle_on_connect() {
