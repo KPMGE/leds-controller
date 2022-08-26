@@ -49,22 +49,21 @@ void loop() {
   
   if (redLedOn) {
     digitalWrite(RED_PIN, HIGH);
-    return;
+  } else {
+     digitalWrite(RED_PIN, LOW);
   }
 
   if (greenLedOn) {
     digitalWrite(GREEN_PIN, HIGH);
-    return;
+  } else {
+    digitalWrite(GREEN_PIN, LOW);
   }
 
   if (blueLedOn) {
     digitalWrite(BLUE_PIN, HIGH);
-    return;
+  } else {
+    digitalWrite(BLUE_PIN, LOW);
   }
-  
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(BLUE_PIN, LOW);
-  digitalWrite(GREEN_PIN, LOW);
 }
 
 void handle_on_connect() {
