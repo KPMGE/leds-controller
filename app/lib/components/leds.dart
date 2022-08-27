@@ -12,20 +12,20 @@ class Leds extends StatefulWidget {
 class _LedsState extends State<Leds> {
   final String nodeUri = "http://192.168.4.1/";
 
-  void turnOnLed(String color) async {
+  void toggleLed(String color) async {
     String ledParam = "";
 
     switch (color) {
-      case "red": 
-        ledParam = "red_on";
-      break;
+      case "red":
+        ledParam = "toggle_red";
+        break;
 
       case "green":
-        ledParam = "green_on";
+        ledParam = "toggle_green";
         break;
 
       case "blue":
-        ledParam = "blue_on";
+        ledParam = "toggle_blue";
         break;
       default:
         print("Invalid led!");
@@ -39,34 +39,7 @@ class _LedsState extends State<Leds> {
     if (r.statusCode == 200) {
       print(r.body);
     } else {
-      print(r.body);
-    }
-  }
-
-  void turnOffLed(String color) async {
-    String ledParam = "";
-
-    switch (color) {
-      case "red":
-        ledParam = "red_off";
-        break;
-
-      case "green":
-        ledParam = "green_off";
-        break;
-
-      case "blue":
-        ledParam = "blue_off";
-        break;
-      default:
-        print("Invalid led!");
-        return;
-    }
-
-    http.Response r = await http.get(Uri.parse(nodeUri + ledParam));
-    if (r.statusCode == 200) {
-      print(r.body);
-    } else {
+      print("ERROR: ");
       print(r.body);
     }
   }
@@ -81,33 +54,24 @@ class _LedsState extends State<Leds> {
           const SizedBox(height: 20.0),
           LedButton(
             color: Colors.red,
-            onActive: () {
-              turnOnLed("red");
-            },
-            onDisabled: () {
-              turnOffLed("red");
+            onPress: () {
+              toggleLed("red");
             },
             text: 'Red',
           ),
           const SizedBox(height: 20.0),
           LedButton(
             color: Colors.green,
-            onActive: () {
-              turnOnLed("green");
-            },
-            onDisabled: () {
-              turnOffLed("green");
+            onPress: () {
+              toggleLed("green");
             },
             text: 'Green',
           ),
           const SizedBox(height: 20.0),
           LedButton(
             color: Colors.blue,
-            onActive: () {
-              turnOnLed("blue");
-            },
-            onDisabled: () {
-              turnOffLed("blue");
+            onPress: () {
+              toggleLed("blue");
             },
             text: 'Blue',
           ),

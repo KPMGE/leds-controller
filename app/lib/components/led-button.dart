@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class LedButton extends StatefulWidget {
   final MaterialColor color;
   final String text;
-  final void Function() onActive;
-  final void Function() onDisabled;
+  final void Function() onPress;
 
   const LedButton({
     super.key,
     required this.color,
-    required this.onActive,
-    required this.onDisabled,
+    required this.onPress,
     required this.text,
   });
 
@@ -31,11 +29,7 @@ class _LedButtonState extends State<LedButton> {
       onPressed: () {
         setState(() {
           _ledSelected = !_ledSelected;
-          if (_ledSelected) {
-						super.widget.onActive();
-						return;
-					} 
-					super.widget.onDisabled();
+          super.widget.onPress();
         });
       },
       child: Text(super.widget.text),
