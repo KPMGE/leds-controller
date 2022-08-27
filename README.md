@@ -6,7 +6,7 @@ So that, it will be possible to turn on and off some LEDs remotely, just using t
 
 
 ## The app
-The app was completely made using the  (flutter)[https://flutter.dev/] framework, this one was made by google and 
+The app was completely made using the  [flutter](https://flutter.dev/) framework, this one was made by google and 
 is one of the most powerful ones to create cross-platform apps nowdays. 
 
 The final application itself is pretty easy, but by building it it was possible to learn a lot about how a flutter project
