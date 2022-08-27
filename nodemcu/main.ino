@@ -13,10 +13,17 @@ ESP8266WebServer server(80);
 #define GREEN_PIN D5
 #define BLUE_PIN D6
 
+enum LedStates { on, off };
+
 // led statates
-bool redLedOn = false;
-bool blueLedOn = false;
-bool greenLedOn = false;
+enum LedStates redState = off;
+enum LedStates greenState = off;
+enum LedStates blueState = off;
+
+void handle_toggle_red();
+void handle_toggle_green();
+void handle_toggle_blue();
+void handle_on_connect();
 
 void setup() {
   Serial.begin(9600);
@@ -32,12 +39,9 @@ void setup() {
   Serial.println(myIP);
 
   server.on("/", handle_on_connect);
-  server.on("/red_on", handle_led_red_on);
-  server.on("/red_off", handle_led_red_off);
-  server.on("/green_on", handle_led_green_on);
-  server.on("/green_off", handle_led_green_off);
-  server.on("/blue_on", handle_led_blue_on);
-  server.on("/blue_off", handle_led_blue_off);
+  server.on("/toggle_red", handle_toggle_red);
+  server.on("/toggle_green", handle_toggle_green);
+  server.on("/toggle_blue", handle_toggle_blue);
   server.onNotFound(handle_not_found);
   
   server.begin();
@@ -46,24 +50,10 @@ void setup() {
 
 void loop() {
   server.handleClient();
-  
-  if (redLedOn) {
-    digitalWrite(RED_PIN, HIGH);
-  } else {
-     digitalWrite(RED_PIN, LOW);
-  }
 
-  if (greenLedOn) {
-    digitalWrite(GREEN_PIN, HIGH);
-  } else {
-    digitalWrite(GREEN_PIN, LOW);
-  }
-
-  if (blueLedOn) {
-    digitalWrite(BLUE_PIN, HIGH);
-  } else {
-    digitalWrite(BLUE_PIN, LOW);
-  }
+  (redState == on) ? digitalWrite(RED_PIN, HIGH) : digitalWrite(RED_PIN, LOW);
+  (greenState == on) ? digitalWrite(GREEN_PIN, HIGH) : digitalWrite(GREEN_PIN, LOW);
+  (blueState == on) ? digitalWrite(BLUE_PIN, HIGH) : digitalWrite(BLUE_PIN, LOW);
 }
 
 void handle_on_connect() {
@@ -71,42 +61,24 @@ void handle_on_connect() {
   server.send(200, "application/json", "done!"); 
 }
 
-void handle_led_red_on() {
-  redLedOn = true;
-  Serial.println("RED LED: ON");
-  server.send(200, "application/json", "RED LED ON"); 
-}
-
-void handle_led_red_off() {
-  redLedOn = false;
-  Serial.println("RED LED: OFF");
-  server.send(200, "application/json", "RED LED OFF"); 
-}
-
-void handle_led_green_on() {
-  greenLedOn = true;
-  Serial.println("GREEN LED: ON");
-  server.send(200, "application/json", "GREEN LED ON"); 
-}
-
-void handle_led_green_off() {
-  greenLedOn = false;
-  Serial.println("green LED: OFF");
-  server.send(200, "application/json", "GREEN LED OFF"); 
-}
-
-void handle_led_blue_on() {
-  blueLedOn = true;
-  Serial.println("BLUE LED: ON");
-  server.send(200, "application/json", "BLUE LED ON"); 
-}
-
-void handle_led_blue_off() {
-  blueLedOn = false;
-  Serial.println("BLUE LED: OFF");
-  server.send(200, "application/json", "BLUE LED OFF"); 
-}
-
 void handle_not_found(){
   server.send(404, "application/json", "Not found");
+}
+
+void handle_toggle_red() {
+  redState = (redState == on) ? off : on;
+  (redState == on) ? Serial.println("RED LED: ON"); : Serial.println("RED LED: OFF");
+  server.send(200, "application/json", "RED LED TOGGLED"); 
+}
+
+void handle_toggle_green() {
+  greenState = (greenState == on) ? off : on;
+  (greenState == on) ? Serial.println("GREEN LED: ON"); : Serial.println("GREEN LED: OFF");
+  server.send(200, "application/json", "GREEN LED TOGGLED"); 
+}
+
+void handle_toggle_blue() {
+  blueState = (blueState == on) ? off : on;
+  (blueState == on) ? Serial.println("BLUE LED: ON"); : Serial.println("BLUE LED: OFF");
+  server.send(200, "application/json", "BLUE LED TOGGLED"); 
 }
