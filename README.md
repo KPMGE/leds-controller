@@ -21,4 +21,6 @@ super interesting and enjoyable!
 ### App Result
 The final result was pretty simple, yet i think it's looking kinda pretty, as i have used the material design.
 
-<img src="https://github.com/KPMGE/leds-controller/blob/main/assets/app.gif" height="600"/>
+<div style="text-align:center">
+  <img src="https://github.com/KPMGE/leds-controller/blob/main/assets/app.gif" height="600"/>
+</div>
